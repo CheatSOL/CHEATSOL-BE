@@ -31,13 +31,7 @@ db.sequelize
     console.error("Unable to connect to the database:", err);
   });
 
-const PORT = process.env.PORT || 3001;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-app.use("/", indexRouter);
+app.use("/api", indexRouter);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
