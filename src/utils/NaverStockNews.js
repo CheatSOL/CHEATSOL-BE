@@ -32,7 +32,7 @@ const fetchNews=async (code)=> {
 
         try {
             const response = await axios.get(url, {
-                //params,
+                params,
                 headers: headers
             })
             //console.log("ddd",response.data);
