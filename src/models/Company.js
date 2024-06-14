@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       code: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.STRING,
+        unique: true,
       },
       name: {
         type: DataTypes.STRING,

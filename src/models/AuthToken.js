@@ -9,9 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
+        unique: true,
       },
       access_token: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       access_token_expired: {
         type: DataTypes.DATE,
