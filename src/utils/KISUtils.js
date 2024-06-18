@@ -26,11 +26,8 @@ function isExpired(dateString) {
   return givenDate < currentDate;
 }
 
-const getStockData = async function getStockData() {
-  try {
-    const url =
-      "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/ranking/market-cap";
-    let accessToken = await authController.getAuthToken(host);
+async function checkToken(host) {
+  let accessToken = await authController.getAuthToken(host);
     if (accessToken === null) {
       accessToken = await getToken();
       await authController.setAuthToken(
@@ -51,6 +48,15 @@ const getStockData = async function getStockData() {
       );
       accessToken = await authController.getAuthToken(host);
     }
+    return accessToken;
+}
+
+const getStockData = async function getStockData() {
+  let accessToken = await checkToken(host);
+  try {
+    const url =
+      "https://openapi.koreainvestment.com:9443/uapi/domestic-stock/v1/ranking/market-cap";
+    
     const authorization = accessToken.access_token;
     const token_type = accessToken.token_type;
     const headers = {
@@ -111,4 +117,4 @@ const setStockData = async function setStockData() {
     console.error("Error reading the file:", error);
   }
 };
-module.exports = { getStockData, setStockData };
+module.exports = { getStockData, setStockData, checkToken };

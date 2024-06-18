@@ -2,7 +2,11 @@ const db = require("../models/DB");
 
 async function getAuthToken(apiHost) {
   try {
-    const authToken = await db.AuthToken.findOne({ where: { name: apiHost } });
+    const authToken = await db.AuthToken.findOne({
+      where: { name: apiHost },
+      order: [['updatedAt', 'DESC']]
+    });
+    
     return authToken.dataValues;
   } catch (error) {
     return null;

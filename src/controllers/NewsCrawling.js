@@ -1,6 +1,6 @@
 const axios=require('axios');
 const cheerio=require('cheerio');
-const { Model } = require('sequelize');
+const { Model, Op } = require('sequelize');
 const { CompanyNews, Company } = require('../models/DB');
 const fetchNews = require('../utils/naverStocknews');
 
@@ -16,7 +16,6 @@ async function fetchNewsContent(link) {
     }
   }
 async function saveCodes() {    
-    await CompanyNews.destroy({where : {}});
     const companies = await Company.findAll();
     const companyCodes = companies.map(company => ({
         code: company.dataValues.code,
@@ -27,36 +26,42 @@ async function saveCodes() {
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-// 데이터베이스에 뉴스 아이템 저장 함수
 async function saveNewsToDatabase(id, newsItems) {
   const newsData = [];
-
-  for (let item of newsItems[0]) {
+  for (let items of newsItems) {
+    for (let item of items) {
       const link = `https://n.news.naver.com/article/${item.officeId}/${item.articleId}`;
-      
-      // 1초 지연 (1000ms)
       await delay(100);
       
       try {
           const detailedContent = await fetchNewsContent(link);
+          const existingNews = await CompanyNews.findOne({
+            where: {
+              link: link,
+              company_id: id
+            }
+          });
 
-          newsData.push({
+          if (!existingNews) {
+            newsData.push({
               title: item.title,
               content: detailedContent || item.body,
               link: link,
               company_id: id
-          });
+            });
+          }
       } catch (error) {
           console.error(`Error fetching news content for ${link}:`, error);
           // 에러 처리 (예: 특정 뉴스 아이템에 대한 실패를 로그로 남기거나, 다시 시도할 수 있도록 로직 추가)
       }
+    }
   }
-
   // 데이터베이스에 저장
   if (newsData.length > 0) {
-      await CompanyNews.bulkCreate(newsData);
+    await CompanyNews.bulkCreate(newsData);
   }
 }
+
 // Express 컨트롤러 함수
 async function handleNewsDatas(data, res) {
   try {

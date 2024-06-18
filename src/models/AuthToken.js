@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
-        unique: true,
       },
       access_token: {
         type: DataTypes.TEXT,
