@@ -3,8 +3,8 @@ var router = express.Router();
 const { getStockData, setStockData } = require("../utils/KISUtils");
 const { returnDto } = require("../utils/DtoUtils");
 const handleCompanyNews =require( "../controllers/NewsCrawling");
-const { authCurrentPrice, getCurrentPrice}=require( "../controllers/stockdetail/CurrentPrice");
-const {auth, getDailyPrice}=require("../controllers/stockdetail/DailyPrice");
+const {getCurrentPrice}=require( "../controllers/stockdetail/CurrentPrice");
+const {getDailyPrice}=require("../controllers/stockdetail/DailyPrice");
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.json("Hello World");

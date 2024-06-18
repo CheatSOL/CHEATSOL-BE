@@ -1,38 +1,26 @@
 const axios = require('axios');
+const {checkToken} = require("../../utils/KISUtils");
 
-const APP_KEY = "PSFtwDMJ9zt5YJhtqwpL7MOKYaYwclKaSMLZ";
-const APP_SECRET = "TX8lP5381dlQ/DfTFF/gj1VEr7KUkvBXi614ES/ffRzELJLzWkQT1vdILWHwScuUowmfVacdfzEvoq3QsiyPDLp8iwElirja12Ir91lzftG+agWBs8wb3QFAkWoe1ErAyre/G7zXNMJXao25J2fEAk3KqY64X6EnH7PBaw1BLuVbeJKCpiA=";
-let ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0b2tlbiIsImF1ZCI6IjRhY2VmYWYzLWNjNDQtNDNhNS1hMzcxLWNjNmRlMjg4ZDllMCIsInByZHRfY2QiOiIiLCJpc3MiOiJ1bm9ndyIsImV4cCI6MTcxODc2MzM0MSwiaWF0IjoxNzE4Njc2OTQxLCJqdGkiOiJQU0Z0d0RNSjl6dDVZSmh0cXdwTDdNT0tZYVl3Y2xLYVNNTFoifQ.RGbpI1bKYroe9adL4HG4id9HOGLQWsUfbgkFXkf4gtSigZSY6G6D93IYDkr8lZejDJCpAD75mRBo3tcttrQeeA";
+require("dotenv").config(); // dotenv 설정 불러오기
+
+const host = "KIS";
+const APP_KEY = process.env.KIS_APP_KEY;
+const APP_SECRET = process.env.KIS_SECRET_KEY;
 const URL_BASE = "https://openapi.koreainvestment.com:9443";
-
-// 인증 요청
-const auth = async () => {
-    const headers = { "content-type": "application/json" };
-    const body = {
-        "grant_type": "client_credentials",
-        "appkey": APP_KEY,
-        "appsecret": APP_SECRET
-    };
-    const PATH = "oauth2/tokenP";
-    const URL = `${URL_BASE}/${PATH}`;
-
-    try {
-        const response = await axios.post(URL, body, { headers });
-        ACCESS_TOKEN = response.data.access_token;
-    } catch (error) {
-        console.error('Error fetching access token:', error.message);
-        throw new Error('Failed to fetch access token');
-    }
-};
 
 // 일별 주식 가격 요청
 const getDailyPrice = async (symbol) => {
+    
+    const ACCESS_TOKEN = await checkToken(host);
     const PATH = "uapi/domestic-stock/v1/quotations/inquire-daily-price";
     const URL = `${URL_BASE}/${PATH}`;
 
+
+    const authorization = ACCESS_TOKEN.access_token;
+    const token_type = ACCESS_TOKEN.token_type;
     const headers = {
         "Content-Type": "application/json",
-        "authorization": `Bearer ${ACCESS_TOKEN}`,
+        "authorization": `${token_type} ${authorization}`,
         "appKey": APP_KEY,
         "appSecret": APP_SECRET,
         "tr_id": "FHKST01010400"
@@ -61,4 +49,4 @@ const getDailyPrice = async (symbol) => {
     }
 };
 
-module.exports = { getDailyPrice, auth };
+module.exports = { getDailyPrice };
