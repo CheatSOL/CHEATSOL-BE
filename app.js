@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var indexRouter = require("./src/routes/index");
-var usersRouter = require("./src/routes/users");
+var companyRouter = require("./src/routes/company");
 const db = require("./src/models/DB");
 
 var app = express();
@@ -31,12 +31,13 @@ db.sequelize
   });
 
 app.use("/api", indexRouter);
-app.use("/users", usersRouter);
+app.use("/api/company", companyRouter);
 
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  createError(404);
+  res.json({ code: 404, message: "서버에 url과 일치하는 api가 없습니다." });
 });
 
 // error handler

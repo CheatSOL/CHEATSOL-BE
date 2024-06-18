@@ -70,8 +70,15 @@ jobs:
             sudo npm install -g pm2
             # Navigate to the application directory
             cd /home/ec2-user/CheatSOL-BE
+
+            # Install Python and pip
+            sudo yum install -y python3
+            sudo alternatives --set python /usr/bin/python3
+            sudo yum install -y python3-pip
+
             # Install project dependencies
             npm install --production
+            pip install -r requirements.txt
             # Restart or start the application with pm2
             pm2 stop all
             pm2 delete all
