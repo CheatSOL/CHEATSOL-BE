@@ -9,7 +9,6 @@ var usersRouter = require("./src/routes/users");
 const db = require("./src/models/DB");
 
 var app = express();
-app.set('view engine', 'ejs');
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

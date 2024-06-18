@@ -26,21 +26,15 @@ async function saveCodes() {
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-// 데이터베이스에 뉴스 아이템 저장 함수
-// 데이터베이스에 뉴스 아이템 저장 함수
 async function saveNewsToDatabase(id, newsItems) {
   const newsData = [];
   for (let items of newsItems) {
     for (let item of items) {
       const link = `https://n.news.naver.com/article/${item.officeId}/${item.articleId}`;
-      
-      // 1초 지연 (1000ms)
       await delay(100);
       
       try {
           const detailedContent = await fetchNewsContent(link);
-
-          // 뉴스 항목이 이미 존재하는지 확인
           const existingNews = await CompanyNews.findOne({
             where: {
               link: link,
