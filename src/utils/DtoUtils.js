@@ -1,10 +1,10 @@
 function returnDto(code, status, message) {
-  return JSON.stringify({
+  return {
     code: code,
     status: status,
     message: message,
-    createdAt: Date.now(),
-  });
+    createdAt: new Date().toISOString(),
+  };
 }
 
 module.exports = { returnDto };

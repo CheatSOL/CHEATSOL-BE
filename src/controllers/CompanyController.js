@@ -14,7 +14,6 @@ async function getCompanyByCode(code) {
 async function getCompanies() {
   try {
     const companies = await db.Company.findAll();
-    console.log(company);
     return companies;
   } catch (error) {
     console.log("회사 정보가 없음");
@@ -33,4 +32,4 @@ async function setCompanies(companies) {
   await db.Company.bulkCreate(companyData);
 }
 
-module.exports = { setCompanies };
+module.exports = { setCompanies, getCompanies, getCompanyByCode };
