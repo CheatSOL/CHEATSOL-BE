@@ -5,12 +5,23 @@ const { returnDto } = require("../utils/DtoUtils");
 const handleCompanyNews =require( "../controllers/NewsCrawling");
 const {getCurrentPrice}=require( "../controllers/stockdetail/CurrentPrice");
 const {getDailyPrice}=require("../controllers/stockdetail/DailyPrice");
+const fetchNews =require("../utils/NaverStockNews");
+
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.json("Hello World");
 });
 
 router.get("/news", handleCompanyNews);
+router.get("/stocknews", async (req, res, next) => {
+  const code = req.query.symbol || '005930'; // default code if not provided
+  try {
+    const news = await fetchNews(code);
+    res.status(200).json(news);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch news' });
+  }
+});
 
 
 router.get('/current-price', async (req, res) => {

@@ -10,10 +10,6 @@ const fetchNews=async (code)=> {
     const agent = new https.Agent({
         rejectUnauthorized: false // 인증서 검증 무시
       });
-
-
-
-      
       
     const url = `https://m.stock.naver.com/api/news/stock/${code}`;
 
@@ -47,12 +43,5 @@ const fetchNews=async (code)=> {
 
     return allNewsItems;
 }
-
-// fetchNews().then(allNewsItems => {
-//     console.log(`Total news items fetched: ${allNewsItems.length}`);
-//     // console.log(allNewsItems);
-// }).catch(error => {
-//     console.error('Error fetching all news items:', error);
-// });
 
 module.exports=fetchNews;

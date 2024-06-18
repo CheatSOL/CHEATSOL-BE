@@ -1,8 +1,8 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
-const { Op, Model } = require("sequelize");
-const { CompanyNews, Company } = require("../models/DB");
-const fetchNews = require("../utils/naverStocknews");
+const axios=require('axios');
+const cheerio=require('cheerio');
+const { Model, Op } = require('sequelize');
+const { CompanyNews, Company } = require('../models/DB');
+const fetchNews = require('../utils/NaverStockNews');
 
 async function fetchNewsContent(link) {
   try {
