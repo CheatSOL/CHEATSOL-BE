@@ -3,7 +3,7 @@ const https = require('https');
 
 
 const pageSize = 20;
-const totalPages = 5; // 100개의 뉴스를 가져오기 위해 필요한 페이지 수
+const totalPages = 1; // 100개의 뉴스를 가져오기 위해 필요한 페이지 수
 
 const fetchNews=async (code)=> {
     let allNewsItems = [];
