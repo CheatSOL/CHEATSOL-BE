@@ -10,21 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
       },
-      created_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-      status: {
-        type: DataTypes.INTEGER,
-      },
     },
     {
       tableName: "hash_tag",
-      timestamps: false,
+      timestamps: true,
     }
   );
 

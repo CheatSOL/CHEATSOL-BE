@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       access_token: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       access_token_expired: {
         type: DataTypes.DATE,

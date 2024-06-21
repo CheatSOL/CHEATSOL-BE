@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       content: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       link: {
         type: DataTypes.STRING,
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "company",
+      tableName: "company_news",
       timestamps: true,
     }
   );
