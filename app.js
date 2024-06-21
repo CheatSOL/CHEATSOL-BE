@@ -3,9 +3,14 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const axios = require('axios');
+const cheerio = require('cheerio');
 
+// 라우터 추가
 var indexRouter = require("./src/routes/index");
 var companyRouter = require("./src/routes/company");
+var keywordRouter = require("./src/routes/keyword"); //연관검색어 router
+
 const db = require("./src/models/DB");
 
 var app = express();
@@ -30,8 +35,11 @@ db.sequelize
     console.error("Unable to connect to the database:", err);
   });
 
+// 라우터 url 설정
 app.use("/api", indexRouter);
 app.use("/api/company", companyRouter);
+app.use("/api/keyword",keywordRouter);
+
 
 
 // catch 404 and forward to error handler
