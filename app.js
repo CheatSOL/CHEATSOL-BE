@@ -6,6 +6,8 @@ var logger = require("morgan");
 
 var indexRouter = require("./src/routes/index");
 var companyRouter = require("./src/routes/company");
+var googleRouter = require("./src/routes/google");
+var stockInfoRouter = require("./src/routes/stock.info.detail");
 const db = require("./src/models/DB");
 
 var app = express();
@@ -32,7 +34,8 @@ db.sequelize
 
 app.use("/api", indexRouter);
 app.use("/api/company", companyRouter);
-
+app.use("/api/trends", googleRouter);
+app.use("/api/stockInfo", stockInfoRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -48,7 +51,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.json(res.locals)
+  res.json(res.locals);
 });
 
 module.exports = app;
