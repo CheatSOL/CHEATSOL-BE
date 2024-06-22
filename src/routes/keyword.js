@@ -22,12 +22,30 @@ async function fetchKeyword(body) {
 
 
 router.post('/', async (req,res) => {
-    //body에 필요한 객체
-    console.log(req.data);
-
-    // - keyword가 영어일 경우 모두 소문자로 변환해야함
+    //body에 필요한 객체: keyword
+    // - keyword가 영어일 경우 모두 소문자로 변환해야 합니다. (by 썸트렌드 요청규칙)
     const keyword = req.body.keyword.toLowerCase();
-    const { scoringKeyword, startDate, endDate } = req.body;
+    const scoringKeyword = keyword;
+    
+    if (!keyword ) {
+        return res.status(400).json({ error: 'keyword, scoringKeyword, startDate, and endDate are required' });
+    }
+    
+    // - 비로그인 요청이므로, 날짜는 7일 전부터 오늘로 고정시켜놨습니다.
+     const today = new Date();
+     const sevenDaysAgo = new Date(today);
+     sevenDaysAgo.setDate(today.getDate() - 7);
+    // 썸트렌드 요청 날짜 형식으로 변환 (ex. 20240622)
+     const formatDate = (date) => {
+         const year = date.getFullYear();
+         const month = String(date.getMonth() + 1).padStart(2, '0');
+         const day = String(date.getDate()).padStart(2, '0');
+         return `${year}${month}${day}`;
+     };
+     // startDate: 7일 전 날짜
+     // endDate: 현재날짜
+     const startDate = formatDate(sevenDaysAgo);
+     const endDate = formatDate(today);
  
     const body = {
         keyword,
@@ -81,12 +99,33 @@ async function fetchNews(body) {
 }
 
 router.post('/news', async (req,res) => {
-    //body에 필요한 객체
-    const { keyword, scoringKeyword, ex, startDate, endDate } = req.body;
-
-    if (!keyword || !scoringKeyword || !startDate || !endDate) {
+    console.log("news 요청")
+    //body에 필요한 객체: keyword, exWord(선택된 연관어)
+    // - keyword가 영어일 경우 모두 소문자로 변환해야 합니다. (by 썸트렌드 요청규칙)
+    const exWord = req.body.exWord;
+    const ex = {news: [exWord]};
+    const keyword = req.body.keyword.toLowerCase();
+    const scoringKeyword = keyword;
+    
+    if (!keyword || !ex) {
         return res.status(400).json({ error: 'keyword, scoringKeyword, startDate, and endDate are required' });
     }
+    
+    // - 비로그인 요청이므로, 날짜는 7일 전부터 오늘로 고정시켜놨습니다.
+     const today = new Date();
+     const sevenDaysAgo = new Date(today);
+     sevenDaysAgo.setDate(today.getDate() - 7);
+    // 썸트렌드 요청 날짜 형식으로 변환 (ex. 20240622)
+     const formatDate = (date) => {
+         const year = date.getFullYear();
+         const month = String(date.getMonth() + 1).padStart(2, '0');
+         const day = String(date.getDate()).padStart(2, '0');
+         return `${year}${month}${day}`;
+     };
+     // startDate: 7일 전 날짜
+     // endDate: 현재날짜
+     const startDate = formatDate(sevenDaysAgo);
+     const endDate = formatDate(today);
 
     const body = {    
         ex,
