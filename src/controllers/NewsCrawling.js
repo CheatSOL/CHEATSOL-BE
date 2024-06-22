@@ -32,7 +32,6 @@ function delay(ms) {
 async function saveNewsToDatabase(id, newsItems) {
   const newsData = [];
 
-  //console.log("newsItems", newsItems);
   for (let items of newsItems) {
     for (let item of items) {
       const link = `https://n.news.naver.com/article/${item.officeId}/${item.articleId}`;

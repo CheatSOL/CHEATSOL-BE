@@ -31,9 +31,7 @@ const fetchNews=async (code)=> {
                 params,
                 headers: headers
             })
-            //console.log("ddd",response.data);
             const itemsArray= response.data.map(item=>item.items);
-            //console.log(itemsArray);
             allNewsItems = allNewsItems.concat(itemsArray);
         } catch (error) {
             console.error(`Error fetching news data on page ${page}:`, error);
