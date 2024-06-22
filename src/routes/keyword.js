@@ -24,8 +24,11 @@ async function fetchKeyword(body) {
 router.post('/', async (req,res) => {
     //body에 필요한 객체
     console.log(req.data);
-    const { keyword, scoringKeyword, startDate, endDate } = req.body;
 
+    // - keyword가 영어일 경우 모두 소문자로 변환해야함
+    const keyword = req.body.keyword.toLowerCase();
+    const { scoringKeyword, startDate, endDate } = req.body;
+ 
     const body = {
         keyword,
         scoringKeyword,
