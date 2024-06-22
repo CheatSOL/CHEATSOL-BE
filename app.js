@@ -7,19 +7,46 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 // 라우터 추가
+
+const {wsdata}=require("./src/utils/WSPrice");
 var indexRouter = require("./src/routes/index");
 var companyRouter = require("./src/routes/company");
 var keywordRouter = require("./src/routes/keyword"); //연관검색어 router
+var googleRouter = require("./src/routes/google");
+var stockInfoRouter = require("./src/routes/stock.info.detail");
 
 const db = require("./src/models/DB");
-
+const http=require('http');
 var app = express();
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+const server = http.createServer(app);
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ server });
+wss.on('connection',  async function connection(ws) {
+  console.log('새로운 WebSocket 클라이언트가 연결되었습니다.');
+  let id;
+  ws.on('message', (message) => {
+    const data = JSON.parse(message);
+    console.log('Received data:', data);
+    id = data.id;
+    if (id) {
+        wsdata(ws, id);  // id가 설정된 후에 wsdata 호출
+    } else {
+        console.error('ID is undefined');
+    }
+});
 
-// 데이터베이스 연결 확인 및 동기화
+  ws.on('close', function close() {
+      console.log('WebSocket 연결이 종료되었습니다.');
+  });
+});
+server.listen(3002, () => {
+  console.log('서버가 3002번 포트에서 실행 중입니다.');
+});
+
 db.sequelize
   .authenticate()
   .then(() => {
@@ -39,8 +66,8 @@ db.sequelize
 app.use("/api", indexRouter);
 app.use("/api/company", companyRouter);
 app.use("/api/keyword",keywordRouter);
-
-
+app.use("/api/trends", googleRouter);
+app.use("/api/stockInfo", stockInfoRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -56,7 +83,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.json(res.locals)
+  res.json(res.locals);
 });
 
 module.exports = app;

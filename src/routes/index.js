@@ -27,9 +27,7 @@ router.get("/stocknews", async (req, res, next) => {
 router.get('/current-price', async (req, res) => {
   const symbol = req.query.symbol || '005930';
   try {
-    // await authCurrentPrice();
     const price = await getCurrentPrice(symbol); // 현재 삼성전자로 하드코딩
-    console.log('ㅓㅓ',price);
     res.json(price);
   }
   catch (error) {
@@ -40,9 +38,10 @@ router.get('/current-price', async (req, res) => {
 
 router.get('/daily-price', async (req, res) => {
   const symbol = req.query.symbol || '005930';
+  const period=req.query.period 
   try {
     // await auth();
-    const price = await getDailyPrice(symbol); // 현재 삼성전자로 하드코딩
+    const price = await getDailyPrice(symbol,period ); // 현재 삼성전자로 하드코딩
     console.log('ㅇㅇ',price);
     res.json(price);
   }
