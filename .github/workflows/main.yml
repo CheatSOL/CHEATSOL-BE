@@ -54,7 +54,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: 22
           source: "."
-          target: "/home/ec2-user/CheatSOL-BE"
+          target: "/home/ubuntu/CheatSOL-BE"
 
       - name: Execute remote commands via SSH
         uses: appleboy/ssh-action@master
@@ -66,18 +66,14 @@ jobs:
           script: |
             # Install Node.js and pm2 on Amazon Linux
             curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -
-            sudo yum install -y nodejs
-            sudo npm install -g pm2
+            sudo apt-get update -y
+            sudo apt-get install -y nodejs
+            sudo apt-get install -g pm2
             # Navigate to the application directory
-            cd /home/ec2-user/CheatSOL-BE
-
-            # Install Python and pip
-            sudo yum install -y python3
-            sudo alternatives --set python /usr/bin/python3
-            sudo yum install -y python3-pip
+            cd /home/ubuntu/CheatSOL-BE
 
             # Install project dependencies
-            npm install --production
+            npm install
             pip install -r requirements.txt
             # Restart or start the application with pm2
             pm2 stop all
