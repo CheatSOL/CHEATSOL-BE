@@ -9,11 +9,11 @@ const APP_SECRET = process.env.KIS_SECRET_KEY;
 const URL_BASE = "https://openapi.koreainvestment.com:9443";
 
 // 일별 주식 가격 요청
-const getDailyPrice = async (symbol, period) => {
+const getPeriodPrice = async (symbol, startDate, endDate, period) => {
     
     try {
     const ACCESS_TOKEN = await checkToken(host);
-    const PATH = "uapi/domestic-stock/v1/quotations/inquire-daily-price";
+    const PATH = "/uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice";
     const URL = `${URL_BASE}/${PATH}`;
 
 
@@ -24,12 +24,14 @@ const getDailyPrice = async (symbol, period) => {
         "authorization": `${token_type} ${authorization}`,
         "appKey": APP_KEY,
         "appSecret": APP_SECRET,
-        "tr_id": "FHKST01010400"
+        "tr_id": "FHKST03010100"
     };
 
     const params = {
         "fid_cond_mrkt_div_code": "J",
         "fid_input_iscd": symbol,
+        "fid_input_date_1":startDate,
+        "fid_input_date_2":endDate,
         "fid_period_div_code": period,
         "fid_org_adj_prc": "1"
     };
@@ -48,4 +50,4 @@ const getDailyPrice = async (symbol, period) => {
     }
 };
 
-module.exports = { getDailyPrice };
+module.exports = { getPeriodPrice };
