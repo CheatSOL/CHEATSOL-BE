@@ -6,6 +6,7 @@ var logger = require("morgan");
 
 var indexRouter = require("./src/routes/index");
 var companyRouter = require("./src/routes/company");
+var socialRouter = require("./src/routes/social");
 const db = require("./src/models/DB");
 
 var app = express();
@@ -32,8 +33,7 @@ db.sequelize
 
 app.use("/api", indexRouter);
 app.use("/api/company", companyRouter);
-
-
+app.use("/api/social", socialRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   createError(404);
@@ -48,7 +48,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.json(res.locals)
+  res.json(res.locals);
 });
 
 module.exports = app;
