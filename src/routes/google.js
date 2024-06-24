@@ -5,11 +5,11 @@ const googleTrends = require("google-trends-api");
 router.get("/", async (req, res) => {
   try {
     const keyword = req.query.keyword;
-    console.log("키워드:", keyword);
+    const start = req.query.startTime;
 
     // 현재 날짜 기준으로 30일 전부터 데이터 가져오기
     const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 28);
+    startDate.setDate(startDate.getDate() - Number(start) + 2);
     startDate.setHours(0, 0, 0, 0);
     console.log("날짜:", startDate);
 
