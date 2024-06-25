@@ -11,11 +11,14 @@ const cheerio = require("cheerio");
 const { wsdata } = require("./src/utils/WSPrice");
 var indexRouter = require("./src/routes/index");
 var companyRouter = require("./src/routes/company");
+var socialRouter = require("./src/routes/social");
+const db = require("./src/models/DB");
 var keywordRouter = require("./src/routes/keyword"); //연관검색어 router
 var socialChartRouter = require("./src/routes/socialChart");
 var stockInfoRouter = require("./src/routes/stock.info.detail");
 var googleNewsRouter = require("./src/routes/google-news");
 var youTubeNewsRouter = require("./src/routes/youtube-news");
+
 
 const db = require("./src/models/DB");
 const http = require("http");
@@ -67,6 +70,7 @@ db.sequelize
 // 라우터 url 설정
 app.use("/api", indexRouter);
 app.use("/api/company", companyRouter);
+app.use("/api/social", socialRouter);
 app.use("/api/keyword", keywordRouter);
 app.use("/api/trends", socialChartRouter);
 app.use("/api/stockInfo", stockInfoRouter);
