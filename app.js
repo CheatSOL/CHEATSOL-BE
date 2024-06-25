@@ -12,9 +12,10 @@ const { wsdata } = require("./src/utils/WSPrice");
 var indexRouter = require("./src/routes/index");
 var companyRouter = require("./src/routes/company");
 var keywordRouter = require("./src/routes/keyword"); //연관검색어 router
-var googleRouter = require("./src/routes/google");
+var socialChartRouter = require("./src/routes/socialChart");
 var stockInfoRouter = require("./src/routes/stock.info.detail");
 var googleNewsRouter = require("./src/routes/google-news");
+var youTubeNewsRouter = require("./src/routes/youtube-news");
 
 const db = require("./src/models/DB");
 const http = require("http");
@@ -67,9 +68,10 @@ db.sequelize
 app.use("/api", indexRouter);
 app.use("/api/company", companyRouter);
 app.use("/api/keyword", keywordRouter);
-app.use("/api/trends", googleRouter);
+app.use("/api/trends", socialChartRouter);
 app.use("/api/stockInfo", stockInfoRouter);
 app.use("/api/news/google", googleNewsRouter);
+app.use("/api/news/youtube", youTubeNewsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
