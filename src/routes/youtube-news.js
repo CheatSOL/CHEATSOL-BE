@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
   const word = req.query.keyword; // 검색어 지정
   const limit = 10; // 출력 갯수
 
-  youtube.setKey("AIzaSyCa3JgWVKP_3uKLka3_Jn9DKY_EkSQJdwI"); // API 키 입력
+  youtube.setKey(process.env.YT_APP_KEY); // API 키 입력
 
   //// 검색 옵션 시작
   youtube.addParam("order", "date"); // 날짜 순으로 정렬
