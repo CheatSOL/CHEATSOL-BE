@@ -85,7 +85,7 @@ const getTrend = async function getTrendWithTagId(id) {
       {
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTY2OTIsInNlcnZpY2UiOiJtZWRpYW5jZSIsImlhdCI6MTcxOTIwNTE4MCwiZXhwIjoxNzE5MjkxNTgwfQ.X-mR5I2Pa_dPk_k8xtgSmpklcyj0DDUvUSmneMyMS_Q",
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTY2OTIsInNlcnZpY2UiOiJtZWRpYW5jZSIsImlhdCI6MTcxOTI5ODgwMCwiZXhwIjoxNzE5Mzg1MjAwfQ.22gjHjfi11G1YAlbSNrM_zCe-M_Y2387UEPVpNNr0Ms",
         },
       }
     );

@@ -20,8 +20,6 @@ var googleNewsRouter = require("./src/routes/google-news");
 var youTubeNewsRouter = require("./src/routes/youtube-news");
 
 var youtubeRouter = require("./src/routes/youtube");
-
-const db = require("./src/models/DB");
 const http = require("http");
 var app = express();
 app.use(logger("dev"));
