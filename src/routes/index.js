@@ -3,7 +3,6 @@ var router = express.Router();
 const { getStockData, setStockData } = require("../utils/KISUtils");
 const { returnDto } = require("../utils/DtoUtils");
 const handleCompanyNews = require("../controllers/NewsCrawling");
-const handleCompanyNews =require( "../controllers/NewsCrawling");
 const {getCurrentPrice}=require( "../controllers/stockdetail/CurrentPrice");
 const {getDailyPrice}=require("../controllers/stockdetail/DailyPrice");
 const {getPeriodPrice}=require("../controllers/stockdetail/PeriodPrice");
