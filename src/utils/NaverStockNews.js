@@ -3,7 +3,7 @@ const https = require('https');
 
 
 const pageSize = 20;
-const totalPages = 5; // 100개의 뉴스를 가져오기 위해 필요한 페이지 수
+const totalPages = 1; // 100개의 뉴스를 가져오기 위해 필요한 페이지 수
 
 const fetchNews=async (code)=> {
     let allNewsItems = [];
@@ -31,9 +31,7 @@ const fetchNews=async (code)=> {
                 params,
                 headers: headers
             })
-            //console.log("ddd",response.data);
             const itemsArray= response.data.map(item=>item.items);
-            //console.log(itemsArray);
             allNewsItems = allNewsItems.concat(itemsArray);
         } catch (error) {
             console.error(`Error fetching news data on page ${page}:`, error);
