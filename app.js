@@ -14,6 +14,7 @@ var companyRouter = require("./src/routes/company");
 var keywordRouter = require("./src/routes/keyword"); //연관검색어 router
 var googleRouter = require("./src/routes/google");
 var stockInfoRouter = require("./src/routes/stock.info.detail");
+var youtubeRouter = require("./src/routes/youtube");
 
 const db = require("./src/models/DB");
 const http=require('http');
@@ -68,7 +69,7 @@ app.use("/api/company", companyRouter);
 app.use("/api/keyword",keywordRouter);
 app.use("/api/trends", googleRouter);
 app.use("/api/stockInfo", stockInfoRouter);
-
+app.use("/api/youtube",youtubeRouter );
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   createError(404);
