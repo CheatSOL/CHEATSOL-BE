@@ -4,11 +4,10 @@ const Youtube = require("youtube-node");
 const youtube = new Youtube();
 
 router.get("/", async (req, res) => {
-  console.log("keyword :" + req.query.keyword);
   const word = req.query.keyword; // 검색어 지정
   const limit = 10; // 출력 갯수
 
-  youtube.setKey(process.env.YT_APP_KEY); // API 키 입력
+  youtube.setKey(process.env.YOUTUBE_KEY); // API 키 입력
 
   //// 검색 옵션 시작
   youtube.addParam("order", "date"); // 날짜 순으로 정렬
@@ -51,13 +50,6 @@ router.get("/", async (req, res) => {
 
       // 배열에 추가
       videos.push(videoData);
-
-      console.log("pubDate : " + pubDate);
-      console.log("channel : " + channel);
-      console.log("제목 : " + title);
-      console.log("URL : " + url);
-      console.log("Thumbnail_URL : " + thumbnail_url);
-      console.log("-----------");
     }
 
     // 클라이언트에 JSON으로 응답
