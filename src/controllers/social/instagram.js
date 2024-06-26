@@ -44,11 +44,12 @@ const getTagId = async function convertWordToTagId(word) {
   try {
     const { data } = await axios.get(
       `
-      https://moana.mediance.co.kr/v1/instagram-tags/find?keyword=${word}&uid=dFkkFMaZK1&ip=1.231.165.73`,
+      https://moana.mediance.co.kr/v1/instagram-tags/find?keyword=${encodeURI(
+        word
+      )}&uid=${process.env.INSTA_UID_KEY}&ip=1.231.165.73`,
       {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTY2OTIsInNlcnZpY2UiOiJtZWRpYW5jZSIsImlhdCI6MTcxOTIwNTE4MCwiZXhwIjoxNzE5MjkxNTgwfQ.X-mR5I2Pa_dPk_k8xtgSmpklcyj0DDUvUSmneMyMS_Q;",
+          Authorization: process.env.INSTA_KEY,
         },
       }
     );
@@ -64,11 +65,10 @@ const getTags = async function getHotHashTags(word) {
     const { data } = await axios.get(
       `https://moana.mediance.co.kr/v1/instagram-tags/find?keyword=${encodeURI(
         word
-      )}&ip=1.231.165.73&uid=dFkkFMaZK1`,
+      )}&ip=1.231.165.73&uid=${process.env.INSTA_UID_KEY}`,
       {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTY2OTIsInNlcnZpY2UiOiJtZWRpYW5jZSIsImlhdCI6MTcxOTIwNTE4MCwiZXhwIjoxNzE5MjkxNTgwfQ.X-mR5I2Pa_dPk_k8xtgSmpklcyj0DDUvUSmneMyMS_Q",
+          Authorization: process.env.INSTA_KEY,
         },
       }
     );
@@ -84,8 +84,7 @@ const getTrend = async function getTrendWithTagId(id) {
       `https://moana.mediance.co.kr/v1/instagram-tags/${id}/series-summary`,
       {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTY2OTIsInNlcnZpY2UiOiJtZWRpYW5jZSIsImlhdCI6MTcxOTI5ODgwMCwiZXhwIjoxNzE5Mzg1MjAwfQ.22gjHjfi11G1YAlbSNrM_zCe-M_Y2387UEPVpNNr0Ms",
+          Authorization: process.env.INSTA_KEY,
         },
       }
     );
@@ -106,8 +105,7 @@ const getTagInfo = async function getTagInfo(id) {
       `https://moana.mediance.co.kr/v1/instagram-tags/${id}/summary?ip=1.231.165.73`,
       {
         headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTY2OTIsInNlcnZpY2UiOiJtZWRpYW5jZSIsImlhdCI6MTcxOTIwNTE4MCwiZXhwIjoxNzE5MjkxNTgwfQ.X-mR5I2Pa_dPk_k8xtgSmpklcyj0DDUvUSmneMyMS_Q",
+          Authorization: process.env.INSTA_KEY,
         },
       }
     );
@@ -123,9 +121,10 @@ const getTagInfo = async function getTagInfo(id) {
   }
 };
 const getInstagramInfo = async function scrapingInstagramSocialInfo(word) {
+  console.log("instadds : " + process.env.INSTA_KEY);
   try {
     const id = await getTagId(word);
-
+    console.log("dsadsadas" + id);
     if (id) {
       const trendData = await getTrend(id);
       const topTags = (await getTags(word)).slice(0, 3);
