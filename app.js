@@ -11,6 +11,8 @@ const cheerio = require("cheerio");
 const { wsdata } = require("./src/utils/WSPrice");
 var indexRouter = require("./src/routes/index");
 var companyRouter = require("./src/routes/company");
+var socialRouter = require("./src/routes/social");
+const db = require("./src/models/DB");
 var keywordRouter = require("./src/routes/keyword"); //연관검색어 router
 var socialChartRouter = require("./src/routes/socialChart");
 var stockInfoRouter = require("./src/routes/stock.info.detail");
@@ -18,7 +20,7 @@ var googleNewsRouter = require("./src/routes/google-news");
 var youTubeNewsRouter = require("./src/routes/youtube-news");
 var naverNewsRouter = require("./src/routes/naver-news");
 
-const db = require("./src/models/DB");
+var youtubeRouter = require("./src/routes/youtube");
 const http = require("http");
 var app = express();
 app.use(logger("dev"));
@@ -68,6 +70,7 @@ db.sequelize
 // 라우터 url 설정
 app.use("/api", indexRouter);
 app.use("/api/company", companyRouter);
+app.use("/api/social", socialRouter);
 app.use("/api/keyword", keywordRouter);
 app.use("/api/trends", socialChartRouter);
 app.use("/api/stockInfo", stockInfoRouter);
@@ -75,6 +78,7 @@ app.use("/api/news/google", googleNewsRouter);
 app.use("/api/news/youtube", youTubeNewsRouter);
 app.use("/api/news/naver", naverNewsRouter);
 
+app.use("/api/youtube",youtubeRouter );
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   createError(404);
