@@ -28,7 +28,8 @@ router.get("/", async (req, res) => {
       cache = await cacheController.getCache(keyword, social, 0);
     }
     if (cacheController.isExpired(cache)) {
-      const data = JSON.stringify({ data: await getYoutubeNews(word, limit) });
+      const youtube = await getYoutubeNews(word, limit);
+      const data = JSON.stringify(youtube);
       await cacheController.updateCache(keyword, social, 0, data);
       cache = await cacheController.getCache(keyword, social, 0);
     }
