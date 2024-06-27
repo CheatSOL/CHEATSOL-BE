@@ -5,7 +5,7 @@ const youtube = new Youtube();
 
 router.get("/", async (req, res) => {
   const word = req.query.keyword; // 검색어 지정
-  const limit = 10; // 출력 갯수
+  const limit = req.query.limit; // 출력 갯수
 
   youtube.setKey(process.env.YOUTUBE_KEY); // API 키 입력
 

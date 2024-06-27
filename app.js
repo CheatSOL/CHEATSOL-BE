@@ -77,9 +77,6 @@ app.use("/api/stockInfo", stockInfoRouter);
 app.use("/api/news/google", googleNewsRouter);
 app.use("/api/news/youtube", youTubeNewsRouter);
 app.use("/api/news/naver", naverNewsRouter);
-
-app.use("/api/youtube",youtubeRouter );
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   createError(404);
   res.json({ code: 404, message: "서버에 url과 일치하는 api가 없습니다." });
