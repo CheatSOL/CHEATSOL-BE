@@ -3,34 +3,51 @@ const router = express.Router();
 const Youtube = require("youtube-node");
 const youtube = new Youtube();
 
+const cacheController = require("../controllers/CacheController");
+
 router.get("/", async (req, res) => {
   const word = req.query.keyword; // 검색어 지정
   const limit = 10; // 출력 갯수
 
+  const social = "youtube-news";
+  const keyword = word;
   youtube.setKey(process.env.YOUTUBE_KEY); // API 키 입력
 
   //// 검색 옵션 시작
   youtube.addParam("order", "date"); // 날짜 순으로 정렬
-  youtube.addParam("type", "video"); // 타입 지정
+  youtube.addParam("type", "video"); // 타입 지정F
   youtube.addParam("videoLicense", "creativeCommon"); // 크리에이티브 커먼즈 아이템만 불러옴
   //// 검색 옵션 끝
+  try {
+    let cache = await cacheController.getCache(keyword, social, 0);
 
-  youtube.search(word, limit, function (err, result) {
-    // 검색 실행
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ error: "서버 에러가 발생했습니다." });
-    } // 에러일 경우 에러공지하고 빠져나감
+    if (cache === null || cache === undefined) {
+      const youtube = await getYoutubeNews(word, limit);
+      const data = JSON.stringify(youtube);
+      await cacheController.setCache(keyword, social, 0, data);
+      cache = await cacheController.getCache(keyword, social, 0);
+    }
+    if (cacheController.isExpired(cache)) {
+      const data = JSON.stringify({ data: await getYoutubeNews(word, limit) });
+      await cacheController.updateCache(keyword, social, 0, data);
+      cache = await cacheController.getCache(keyword, social, 0);
+    }
 
-    // 1. Parsing
+    const newsItems = JSON.parse(cache.dataValues.data);
+    res.json(newsItems);
+  } catch (err) {
+    console.error("Error fetching RSS feed:", err);
+    res.status(500).send("Error fetching RSS feed");
+  }
+});
+
+async function getYoutubeNews(word, limit) {
+  try {
+    const result = await searchYoutube(word, limit);
     const items = result["items"]; // 결과 중 items 항목만 가져옴
 
-    // 2. 영상 정보를 담을 배열
-    const videos = [];
-
-    // 3. item 돌면서 각각의 영상 정보 추출
-    for (const i in items) {
-      const it = items[i];
+    // item 돌면서 각각의 영상 정보 추출
+    const data = items.map((it) => {
       const title = it["snippet"]["title"];
       const video_id = it["id"]["videoId"];
       const url = "https://www.youtube.com/watch?v=" + video_id;
@@ -47,14 +64,24 @@ router.get("/", async (req, res) => {
         channel,
         pubDate,
       };
+      return videoData;
+    });
 
-      // 배열에 추가
-      videos.push(videoData);
-    }
-
-    // 클라이언트에 JSON으로 응답
-    res.json(videos);
+    return data;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+function searchYoutube(word, limit) {
+  return new Promise((resolve, reject) => {
+    youtube.search(word, limit, (err, result) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(result);
+    });
   });
-});
+}
 
 module.exports = router;
