@@ -42,11 +42,12 @@ if conn:
     model = Word2Vec.load('src/scripts/word2vec_model.model')
 
     results = []
-    
+    shinhan = ['신한', '신한투자증권', 'SOL', '신한투자']
     for index, row in df.iterrows():  # 각 행에 대해 반복
         
             name = row['name']
             code = row['code']
+            
             try:
                 similarity = model.wv.similarity(word, name)
                 results.append({"name": name, "code": code, "similarity": similarity})
@@ -54,6 +55,11 @@ if conn:
                 results.append({"name": name, "code": code, "similarity": 0})
 
 
+    if word in shinhan:
+        for result in results:
+            if result["name"] == "신한지주":
+                result["similarity"] = 1
+                
     results = sorted(results, key=lambda x: x['similarity'], reverse=True)
     for result in results:
         result['similarity'] = str(result['similarity'])

@@ -19,7 +19,6 @@ const fetchData = async (url) => {
       thumbnail_url: null,
       url: `https://www.instagram.com/p/${post.postCode}`,
     }));
-    console.log(formattedData);
     return formattedData;
   } catch (error) {
     console.error(error);
@@ -49,7 +48,6 @@ router.get("/", async (req, res) => {
       cache = await cacheController.getCache(keyword, social, 0);
     }
     posts = JSON.parse(cache.dataValues.data);
-    console.log("fff", posts);
     res.json(posts);
   } catch (err) {
     console.error("Error fetching Instagram posts:", err);
