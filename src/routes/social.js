@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const { getSimilarityCompanies } = require("../controllers/Word2VecController");
 const { getInstagramInfo } = require("../controllers/social/instagram");
 
 router.get("/instagram", async (req, res, next) => {

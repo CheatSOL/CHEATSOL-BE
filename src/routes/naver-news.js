@@ -1,15 +1,30 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
+const cacheController = require("../controllers/CacheController");
 
 router.post("/", async (req, res) => {
-  const data = req.body;
-  console.log("naver news : " + JSON.stringify(data));
-  const baseURL =
-    "https://some.co.kr/sometrend/analysis/composite/v2/documents/score";
+  const body = req.body;
+  const period = 0;
+  const social = "naver-news";
+  console.log("naver news : " + JSON.stringify(body));
+
   try {
-    const response = await axios.post(baseURL, data);
-    let respdata = response.data.item["ko.news"];
+    const keyword = body.keyword;
+    let cache = await cacheController.getCache(keyword, social, period);
+
+    if (cache === null || cache === undefined) {
+      const data = JSON.stringify(await getNaverNews(body));
+      await cacheController.setCache(keyword, social, period, data);
+      cache = await cacheController.getCache(keyword, social, period);
+    }
+    if (cacheController.isExpired(cache)) {
+      const data = JSON.stringify(await getNaverNews(body));
+      await cacheController.updateCache(keyword, social, period, data);
+      cache = await cacheController.getCache(keyword, social, period);
+    }
+
+    let respdata = JSON.parse(cache.dataValues.data);
 
     // 최신순으로 정렬
     respdata = respdata.sort((a, b) => {
@@ -40,5 +55,17 @@ router.post("/", async (req, res) => {
     res.status(500).send("Error fetching data");
   }
 });
+
+async function getNaverNews(data) {
+  const baseURL =
+    "https://some.co.kr/sometrend/analysis/composite/v2/documents/score";
+  try {
+    const response = await axios.post(baseURL, data);
+    let respdata = response.data.item["ko.news"];
+    return respdata;
+  } catch (err) {
+    throw err;
+  }
+}
 
 module.exports = router;

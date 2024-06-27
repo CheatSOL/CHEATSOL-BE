@@ -25,6 +25,7 @@ db.HashTag = require("./HashTag")(sequelize, Sequelize);
 db.CompanyHashTag = require("./CompanyHashTag")(sequelize, Sequelize);
 db.CompanyNews = require("./CompanyNews")(sequelize, Sequelize);
 db.AuthToken = require("./AuthToken")(sequelize, Sequelize);
+db.Cache = require("./Cache")(sequelize, Sequelize);
 
 // 모델 간의 관계 정의
 db.Company.belongsToMany(db.HashTag, {
