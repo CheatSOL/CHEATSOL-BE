@@ -3,6 +3,7 @@ var router = express.Router();
 var axios = require("axios");
 
 const SOCIAL = "sometrend";
+
 //fetchKeyword: 검색어-연관어 키워드 가져오기
 async function fetchKeyword(body) {
   const baseURL =
@@ -73,6 +74,7 @@ router.post("/", async (req, res) => {
 
   try {
     //todo 여기 캐싱
+
     const result = await fetchKeyword(body);
     if (result) {
       res.json({ data: result });
