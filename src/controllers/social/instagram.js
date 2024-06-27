@@ -46,7 +46,7 @@ const getTagId = async function convertWordToTagId(word) {
       `
       https://moana.mediance.co.kr/v1/instagram-tags/find?keyword=${encodeURI(
         word
-      )}&uid=${process.env.INSTA_UID_KEY}&ip=1.231.165.73`,
+      )}&uid=${process.env.INSTA_UID_KEY}&ip=${process.env.INSTA_IP}`,
       {
         headers: {
           Authorization: process.env.INSTA_KEY,
@@ -65,7 +65,7 @@ const getTags = async function getHotHashTags(word) {
     const { data } = await axios.get(
       `https://moana.mediance.co.kr/v1/instagram-tags/find?keyword=${encodeURI(
         word
-      )}&ip=1.231.165.73&uid=${process.env.INSTA_UID_KEY}`,
+      )}&ip=${process.env.INSTA_IP}&uid=${process.env.INSTA_UID_KEY}`,
       {
         headers: {
           Authorization: process.env.INSTA_KEY,
@@ -102,7 +102,7 @@ const getTrend = async function getTrendWithTagId(id) {
 const getTagInfo = async function getTagInfo(id) {
   try {
     const { data } = await axios.get(
-      `https://moana.mediance.co.kr/v1/instagram-tags/${id}/summary?ip=1.231.165.73`,
+      `https://moana.mediance.co.kr/v1/instagram-tags/${id}/summary?ip=${process.env.INSTA_IP}}`,
       {
         headers: {
           Authorization: process.env.INSTA_KEY,
@@ -121,10 +121,8 @@ const getTagInfo = async function getTagInfo(id) {
   }
 };
 const getInstagramInfo = async function scrapingInstagramSocialInfo(word) {
-  console.log("instadds : " + process.env.INSTA_KEY);
   try {
     const id = await getTagId(word);
-    console.log("dsadsadas" + id);
     if (id) {
       const trendData = await getTrend(id);
       const topTags = (await getTags(word)).slice(0, 3);
