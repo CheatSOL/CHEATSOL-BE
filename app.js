@@ -19,8 +19,6 @@ var stockInfoRouter = require("./src/routes/stock.info.detail");
 var googleNewsRouter = require("./src/routes/google-news");
 var youTubeNewsRouter = require("./src/routes/youtube-news");
 var naverNewsRouter = require("./src/routes/naver-news");
-
-var youtubeRouter = require("./src/routes/youtube");
 const http = require("http");
 var app = express();
 app.use(logger("dev"));
@@ -78,7 +76,6 @@ app.use("/api/news/google", googleNewsRouter);
 app.use("/api/news/youtube", youTubeNewsRouter);
 app.use("/api/news/naver", naverNewsRouter);
 
-app.use("/api/youtube",youtubeRouter );
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   createError(404);
