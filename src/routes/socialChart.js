@@ -135,13 +135,13 @@ async function getNaverChart(requestBody) {
       requestBody,
       {
         headers: {
-          "X-Naver-Client-Id": "MrI3E2Bf2lMdJjrb6HaJ",
-          "X-Naver-Client-Secret": "pAvfRnI4Lm",
+          "X-Naver-Client-Id": `${process.env.NAVER_ID}`,
+          "X-Naver-Client-Secret": `${process.env.NAVER_SECRET}`,
           "Content-Type": "application/json",
         },
       }
     );
-    console.log("result : " + response.data.results);
+    console.log("result111: " + response.data.results);
     return response.data.results;
   } catch (err) {
     throw err;
