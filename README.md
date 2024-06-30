@@ -43,22 +43,22 @@
 <br />
 
 ### 메인페이지 및 검색
-![메인페이지 및 검색](../cheatSOL-1.GIF)
+![메인페이지 및 검색](https://github.com/CheatSOL/.github/blob/5348fe5eb61d59fd33355032d1b0121c993e692f/cheatSOL-1.GIF)
 
 ### 다크모드
-![다크모드](../cheatSOL-2.GIF)
+![다크모드](https://github.com/CheatSOL/.github/blob/5348fe5eb61d59fd33355032d1b0121c993e692f/cheatSOL-2.GIF)
 
 ### 소셜분석
-![소셜분석](../cheatSOL-3.GIF)
+![소셜분석](https://github.com/CheatSOL/.github/blob/5348fe5eb61d59fd33355032d1b0121c993e692f/cheatSOL-3.GIF)
 
 ### 연관주식
-![연관주식](../cheatSOL-4.GIF)
+![연관주식](https://github.com/CheatSOL/.github/blob/5348fe5eb61d59fd33355032d1b0121c993e692f/cheatSOL-4.GIF)
 
 ### 연관주식 상세페이지
-![연관주식 상세페이지](../cheatSOL-5.GIF)
+![연관주식 상세페이지](https://github.com/CheatSOL/.github/blob/5348fe5eb61d59fd33355032d1b0121c993e692f/cheatSOL-5.GIF)
 
 ### 연관키워드
-![연관키워드](../cheatSOL-6.GIF)
+![연관키워드](https://github.com/CheatSOL/.github/blob/5348fe5eb61d59fd33355032d1b0121c993e692f/cheatSOL-6.GIF)
 
  # 👋🏻 참여 인원
 <table style="border: 0.5 solid gray">
