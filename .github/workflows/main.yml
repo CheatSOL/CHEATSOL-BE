@@ -72,7 +72,7 @@ jobs:
           port: 22
           script: |
             # Install Node.js and pm2 on Amazon Linux
-            curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -
+            sudo curl -sL https://rpm.nodesource.com/setup_20.x | sudo bash -
             sudo apt-get update -y
             sudo apt-get install -y nodejs
             sudo apt-get install -g pm2
