@@ -76,6 +76,7 @@ jobs:
             sudo apt-get update -y
             sudo apt-get install -y nodejs
             sudo apt-get install -g pm2
+            sudo apt-get install -y python3-pip
             # Navigate to the application directory
             cd /home/ubuntu/CheatSOL-BE
 
